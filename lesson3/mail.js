@@ -1,16 +1,18 @@
 const nodemailer = require('nodemailer');
 
-const smtpTransport = nodemailer.createTransport('SMTP', {
-    service: 'Gmail',
+const smtpTransport = nodemailer.createTransport({
+    host: 'smtp.yandex.ru',
+    port: 465,
+    secure: true, // use TLS
     auth: {
-        user: 'vasya@gmail.com',
-        pass: '******',
+        user: 'vatokato@yandex.ru',
+        pass: '*****',
     }
 });
 
 smtpTransport.sendMail({
-    from: 'Vasya Pupkin <vasya@gmail.com>',
-    to: 'Petr Petrovich <petya@gmail.com>, ....',
+    from: 'Roman Ot <vatokato@yandex.ru>',
+    to: 'vatokato <vatokato@gmail.com>',
     subject: 'Тема',
     text: 'Some text',
     html: '<h1>Hello everyone!</h1>',
