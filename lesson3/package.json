@@ -1,17 +1,17 @@
 {
-  "name": "gb-nodejs",
+  "name": "Lesson3",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "http.js",
   "scripts": {
-    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
-    "pm2": "^4.4.0"
-  },
-  "devDependencies": {}
+    "cheerio": "^1.0.0-rc.3",
+    "nodemailer": "^6.4.6",
+    "request": "^2.88.2"
+  }
 }
