@@ -1,0 +1,74 @@
+<style>
+    .autos-select {
+        font-size: 16px;
+        padding: 6px 12px;
+    }
+    .autos-models {
+        display: flex;
+        flex-wrap: wrap;
+        list-style: none;
+        margin: 20px 0;
+        padding: 0;
+    }
+    .autos-models li {
+        position: relative;
+        margin-bottom: 20px;
+        text-align: center;
+        width: 20%;
+        padding-right:20px;
+    }
+    .autos-models li a{
+        font-size: 16px;
+        text-decoration: none;
+    }
+    .autos-models li img{
+        display: block;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    @media all and (max-width: 1000px) {
+        .autos-models li {
+            width: 33%;
+        }
+    }
+    @media all and (max-width: 600px) {
+        .autos-models li {
+            width: 50%;
+        }
+    }
+    @media all and (max-width: 400px) {
+        .autos-models li {
+            width: 100%;
+        }
+    }
+</style>
+<h1>Каталог автомобилей</h1>
+<form action="" method="post" class="autos-form">
+    {{#if brands}}
+        <select name="brand" class="autos-select">
+            <option value="">Выберите марку</option>
+            {{#each brands}}
+                <option value="{{this.name}}" {{this.selected}}>{{this.title}}</option>
+            {{/each}}
+        </select>
+    {{/if}}
+    {{#if models}}
+        <ul class="autos-models">
+            {{#each models}}
+                <li>
+                    <a href="{{this.url}}" target="_blank">
+                        <img src="{{this.img}}" />
+                        {{this.name}}
+                    </a>
+                </li>
+            {{/each}}
+        </ul>
+    {{/if}}
+</form>
+
+<script>
+    const form = document.querySelector('.autos-form');
+    const selects = document.querySelectorAll('.autos-select');
+    selects.forEach(select => select.addEventListener('change', () => form.submit()))
+</script>

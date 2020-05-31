@@ -1,0 +1,53 @@
+<style>
+    .tranlaster-form {
+        min-width: 300px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .translater-first-column {
+        width: 40%;
+    }
+    .translater-first-column textarea {
+        width: 100%;
+        height: 20vh;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        padding: 10px
+    }
+    .translater-center-column {
+        width: 14%;
+        text-align: center;
+    }
+    .translater-center-column label {
+        display: block;
+        white-space: nowrap
+    }
+    .translater-center-column input {
+        display: inline-block;
+        margin-top: 15px;
+    }
+    .translater-last-column {
+        width: 40%;
+        border: 1px solid #ccc;
+        padding: 10px
+    }
+</style>
+
+<h1>Переводчик</h1>
+<form action="" method="post" class="tranlaster-form">
+  <div class="translater-first-column">
+      <textarea
+        name="text"
+        placeholder="Введите текст"
+      >{{sourceText}}</textarea>
+  </div>
+  <div class="translater-center-column ">
+    {{#each directions}}
+        <label>
+            <input type="radio" name="direction" value="{{this.title}}" {{this.checked}}> {{this.title}}
+        </label>
+    {{/each}}
+    <input type="submit" value='Перевести' />
+  </div>
+  <div class="translater-last-column">{{translatedText}}</div>
+</form>
