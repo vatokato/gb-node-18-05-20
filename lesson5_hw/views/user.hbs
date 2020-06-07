@@ -1,0 +1,16 @@
+<div class="user">
+    <h1>{{firstName}} {{lastName}}</h1>
+    <h3>{{email}}</h3>
+    {{#if error}}
+        <h3>Error!</h3>
+    {{/if}}
+    <ul>
+        {{#each achievements}}
+            <li>{{this}}</li>
+        {{/each}}
+    </ul>
+
+    <hr />
+    <h2>Редактировать</h2>
+    {{>userForm}}
+</div>
