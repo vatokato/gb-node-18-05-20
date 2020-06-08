@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
     await Task.updateOne({_id: id}, {$set: { completed: Boolean(completed) }});
   } else {
     const task = new Task(req.body);
-    await task.save();
+    await task.save(err => console.error(err));
   }
   res.redirect('/tasks');
 });

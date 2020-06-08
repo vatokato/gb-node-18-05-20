@@ -1,20 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('../services/auth');
+const User = require('../models/user');
 
-router.get('/register', async (req, res) => {
-  res.render('register');
+router.get('/', async (req, res) => {
+  const { user } = req;
+  const error = !!req.query.error;
+  res.render('auth', {error, user});
 });
 
 router.post('/register', async (req, res) => {
   const user = new User(req.body);
-  await user.save();
+  await user.save(err => console.error(err));
   res.redirect('/auth');
-});
-
-router.get('/', async (req, res) => {
-  const error = !!req.query.error;
-  res.render('auth', {error});
 });
 
 router.post('/', passport.authenticate);

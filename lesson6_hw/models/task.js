@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 
 const taskSchema = new Schema({
     title: {
-        type: String
+        type: String,
+        required: true,
     },
     completed: {
         type: Boolean,
