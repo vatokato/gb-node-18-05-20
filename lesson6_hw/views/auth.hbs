@@ -1,0 +1,38 @@
+<h2>Вход</h2>
+{{#if authError}}
+    <h2>Auth error</h2>
+{{/if}}
+<form action="/auth" method="POST">
+    <div class="input-container">
+        <input type="text" placeholder="username" name="username">
+    </div>
+    <div class="input-container">
+        <input type="password" placeholder="password" name="password">
+    </div>
+    <div class="button-container">
+        <input type="submit">
+    </div>
+</form>
+
+<hr />
+<h2>Регистрация</h2>
+{{#if regError}}
+    <h2>Auth error</h2>
+{{/if}}
+<form action="/auth/register" method="POST">
+    <div class="input-container">
+        <input type="text" placeholder="username" name="username">
+    </div>
+    <div class="input-container">
+        <input type="text" placeholder="firstName" name="firstName">
+    </div>
+    <div class="input-container">
+        <input type="text" placeholder="lastName" name="lastName">
+    </div>
+    <div class="input-container">
+        <input type="password" placeholder="password" name="password">
+    </div>
+    <div class="button-container">
+        <input type="submit">
+    </div>
+</form>

@@ -1,0 +1,56 @@
+<style>
+    .tasks-form {
+        display: flex;
+    }
+    .tasks-form .button-container {
+        margin-left: 10px;
+    }
+
+    .tasks-list {
+        margin: 20px 0;
+        padding: 0;
+        list-style: none
+    }
+
+    .tasks-list .task-item {
+        display: flex;
+        font-size: 16px;
+        margin: 10px 0;
+        background: #e1e1e1;
+        border-radius: 5px;
+        padding: 6px 12px;
+    }
+    .tasks-list .task-item .title{
+        flex-grow: 1;
+        margin: 0 5px;
+    }
+</style>
+
+
+<form action="/tasks" method="POST" class="tasks-form">
+    <div class="input-container">
+        <input type="text" placeholder="Введита задачу" name="title"/>
+    </div>
+    <div class="button-container">
+        <input type="submit" />
+    </div>
+</form>
+<hr />
+<ul class="tasks-list">
+    {{#each tasks}}
+        <li>
+            <form action="/tasks/" method="POST" class="task-item">
+                <input type="hidden" name="id" value="{{this._id}}">
+                <input type="checkbox" name="completed" {{#if this.completed}} checked {{/if}} />
+                <span class="title">{{this.title}}</span>
+                <button type="submit" name="deleting" value="true">X</button>
+            </form>
+        </li>
+    {{/each}}
+</ul>
+
+<script>
+    document.querySelectorAll('input[name=completed]').forEach(checkbox => {
+        checkbox.addEventListener('change', e => e.target.parentNode.submit());
+    })
+</script>

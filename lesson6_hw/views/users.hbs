@@ -1,0 +1,20 @@
+<div class="users">
+    <h1>{{title}}</h1>
+
+    {{#if users}}
+        <ul class="users-list">
+            {{#each users}}
+                <li>
+                    <a href="/users/{{this.id}}">
+                        {{this.username}} ({{this.firstName}} {{this.lastName}})
+                    </a>
+                    <a href="/users/delete/{{this.id}}">(удалить)</a>
+                </li>
+            {{/each}}
+        </ul>
+    {{/if}}
+    <hr/>
+
+    <h2>Добавить пользователя</h2>
+    {{>userForm}}
+</div>

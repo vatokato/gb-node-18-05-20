@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{title}}</title>
+    <link rel='stylesheet' href='/css/style.css'/>
+</head>
+<body>
+<header>
+    <div class="container">
+        <ul class="top-menu">
+            <li><a href="/">Главная</a></li>
+            <li><a href="/tasks">Задачи</a></li>
+            <li><a href="/users">Пользователи</a></li>
+            <li>
+                {{#if user.username}}
+                    <a href="/auth/logout">Выход</a>
+                {{else}}
+                    <a href="/auth">Вход / Регистрация</a>
+                {{/if}}
+
+            </li>
+        </ul>
+        {{#if user.username}}
+            <div class="top-user">
+                <a href="/users/{{user._id}}">{{user.username}}</a>
+            </div>
+        {{/if}}
+    </div>
+</header>
+<main>
+    <div class="container">
+        {{{body}}}
+    </div>
+</main>
+</body>
+</html>
