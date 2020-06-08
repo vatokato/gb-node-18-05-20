@@ -7,7 +7,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
 const passport = require('./services/auth');
-const router = require('./controllers/');
+const router = require('./controller/');
 
 mongoose.connect(`mongodb://${host}:${port}/${database}`, {
     useNewUrlParser: true,
