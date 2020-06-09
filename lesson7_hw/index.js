@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const { host, port, database, salt } = require('./config');
 
@@ -10,7 +11,7 @@ mongoose.connect(`mongodb://${host}:${port}/${database}`, {
 });
 
 const app = express();
-
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
