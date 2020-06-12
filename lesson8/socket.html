@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket</title>
+    <script src="./socket.io/socket.io.js"></script>
+</head>
+<body>
+<ul id="messages"></ul>
+<input type="text" id="author" placeholder="author"><br/>
+<!--rooms-->
+<input type="text" id="to" placeholder="room name"><br/>
+<!--/rooms-->
+<textarea name="text" id="text" cols="30" rows="10" placeholder="message text"></textarea><br/>
+<button id="send">Send</button><br/><br/>
+
+<input type="text" id="roomName" placeholder="Room name">
+<button id="join">Join</button>
+<script>
+    const socket = io.connect('http://localhost:8888');
+    const pSocket = io.connect('http://localhost:8888/private');
+
+    const $author = document.querySelector('#author');
+    const $messages = document.querySelector('#messages');
+    const $to = document.querySelector('#to');
+    const $roomName = document.querySelector('#roomName');
+    const $text = document.querySelector('#text');
+    const $send = document.querySelector('#send');
+    const $join = document.querySelector('#join');
+
+    function renderMessage(message) {
+        $messages.insertAdjacentHTML('afterbegin', `<li>${message.author} (${message.created}): ${message.text}</li>`);
+    }
+
+    fetch('/messages')
+        .then(response => response.json())
+        .then(messages => {
+            messages.forEach((message) => {
+                renderMessage(message);
+            });
+        })
+    $send.addEventListener('click', () => {
+        console.log('click');
+        socket.emit('message', {
+            author: $author.value,
+            text: $text.value,
+            to: $to.value,
+            created: new Date(),
+        });
+    });
+
+    $join.addEventListener('click', () => {
+        socket.emit('join', $roomName.value);
+    })
+
+    socket.on('message', (message) => {
+        console.log(message);
+        renderMessage(message);
+    });
+</script>
+</body>
+</html>
