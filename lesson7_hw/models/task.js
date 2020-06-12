@@ -18,6 +18,7 @@ const taskSchema = new Schema({
         type: Boolean,
         default: false,
     },
+    folderId: Number,
     parentId: Number,
 }, { timestamps: {} });
 
