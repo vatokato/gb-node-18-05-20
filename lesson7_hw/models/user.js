@@ -21,7 +21,6 @@ const userSchema = new Schema({
 
 userSchema.pre('save', function (next) {
   if (this.isModified('password')) {
-    console.log('pass modify');
     const salt = bcryptjs.genSaltSync(saltRounds);
     this.password = bcryptjs.hashSync(this.password, salt);
   }

@@ -6,25 +6,31 @@ const { tokenSecret } = require('../config');
 
 const User = require('../models/user');
 
-// Авторизация по токену
 router.post('/', async (req, res) => { // localhost/auth
-  const { username, password } = req.body;
+  const { username, password, password2 } = req.body;
 
-  if (!username || !password) {
+  if (!username || !password || !password2) {
     return res.status(401).json({ message: 'Incorrect username or password.' });
+  }
+
+  if (password !== password2) {
+    return res.status(401).json({ message: 'Passwords do not match' });
   }
 
   const user = await User.findOne({username});
 
-  if (!user) {
-    return res.status(401).json({ message: 'User not found' });
+  if (user) {
+    return res.status(401).json({ message: 'User already exists' });
   }
 
-  if (!user.comparePassword(password)) {
-    return res.status(401).json({ message: 'Wrong password' });
-  }
+  const newUser = new User({
+    username,
+    password,
+  });
 
-  const userInfo = pick(user, ['_id', 'username']);
+  await newUser.save();
+
+  const userInfo = pick(newUser, ['_id', 'username']);
   console.log(userInfo);
   res.json({
     token: jwt.sign(userInfo, tokenSecret),

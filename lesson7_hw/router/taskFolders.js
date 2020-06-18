@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const Task = require('../models/task');
+const TaskFolder = require('../models/taskFolder');
 const omit = require('lodash/omit');
 const { tokenSecret } = require('../config');
 
@@ -23,34 +23,33 @@ router.use('/', async (req, res, next) => {
 
 router.get('/', async (req, res) => {
   const { _id: userId } = req.user;
-  const tasks = await Task.find({ userId }).lean();
-  res.json(tasks.map(task => omit(task, 'userId')));
+  const folders = await TaskFolder.find({ userId }).lean();
+  res.json(folders.map(task => omit(task, 'userId')));
 });
 
 router.post('/', (req, res) => {
   const { _id: userId } = req.user;
-  const task = new Task({ ...req.body, userId });
-  task.save(error => {
+  const folder = new TaskFolder({ ...req.body, userId });
+  folder.save(error => {
     if (error) {
       res.json({ error });
     } else {
-      res.json(omit(task, 'userId'));
+      res.json(omit(folder, 'userId'));
     }
   });
 });
 
 // Полное изменение задачи
 router.put('/:id', async (req, res) => {
-  const savedTask = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true }).lean();
-  res.json(omit(savedTask, 'userId'));
+  const folder = await TaskFolder.findOneAndUpdate(req.params.id, req.body, { new: true }).lean();
+  res.json(omit(folder, 'userId'));
 });
 
 // Частичное изменение задачи
 router.patch('/:id', async (req, res) => {
-  console.log(req.body);
   try {
-    const savedTask = await Task.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true }).lean();
-    res.json(omit(savedTask, 'userId'));
+    const folder = await TaskFolder.findOneAndUpdate(req.params.id, { $set: req.body }, { new: true }).lean();
+    res.json(omit(folder, 'userId'));
   } catch ({ message }) {
     res.json({
       error: message
@@ -59,8 +58,8 @@ router.patch('/:id', async (req, res) => {
 });
 
 router.delete('/:id', async (req, res) => {
-  const deletedTask = await Task.findByIdAndRemove(req.params.id);
-  res.json(omit(deletedTask, 'userId'));
+  const result = await TaskFolder.deleteOne({ _id: req.params.id });
+  res.json(result);
 });
 
 module.exports = router;
